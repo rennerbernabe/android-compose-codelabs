@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -169,12 +170,23 @@ fun FavoriteCollectionsGrid(
     }
 }
 
-// Step: Home section - Slot APIs
+
 @Composable
 fun HomeSection(
-    modifier: Modifier = Modifier
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
 ) {
-    // Implement composable here
+    Column {
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
 }
 
 // Step: Home screen - Scrolling
@@ -281,7 +293,11 @@ fun AlignYourBodyRowPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun HomeSectionPreview() {
-    MySootheTheme { HomeSection() }
+    MySootheTheme {
+        HomeSection(title = R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+    }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
