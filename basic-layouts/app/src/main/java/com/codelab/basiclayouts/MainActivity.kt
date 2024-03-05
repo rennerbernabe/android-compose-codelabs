@@ -271,7 +271,7 @@ private fun SootheNavigationRail(modifier: Modifier = Modifier) {
             modifier = modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        ) {
             NavigationRailItem(
                 icon = {
                     Icon(
@@ -303,10 +303,16 @@ private fun SootheNavigationRail(modifier: Modifier = Modifier) {
     }
 }
 
-// Step: Landscape Mode
 @Composable
 fun MySootheAppLandscape() {
-    // Implement composable here
+    MySootheTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                SootheNavigationRail()
+                HomeScreen()
+            }
+        }
+    }
 }
 
 // Step: MySoothe App
