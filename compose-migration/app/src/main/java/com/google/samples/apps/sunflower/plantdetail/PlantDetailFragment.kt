@@ -21,7 +21,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ShareCompat
 import androidx.core.widget.NestedScrollView
@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.samples.apps.sunflower.R
 import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.databinding.FragmentPlantDetailBinding
+import com.google.samples.apps.sunflower.theme.SunflowerTheme
 import com.google.samples.apps.sunflower.utilities.InjectorUtils
 import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
 
@@ -60,9 +61,15 @@ class PlantDetailFragment : Fragment() {
             container,
             false
         ).apply {
-            composeView.setContent {
-                MaterialTheme {
-                    PlantDetailDescription(plantDetailViewModel)
+            composeView.apply {
+                // Dispose the Composition when the view's LifecycleOwner is destroyed
+                setViewCompositionStrategy(
+                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                )
+                setContent {
+                    SunflowerTheme {
+                        PlantDetailDescription(plantDetailViewModel)
+                    }
                 }
             }
 
@@ -113,6 +120,7 @@ class PlantDetailFragment : Fragment() {
                         createShareIntent()
                         true
                     }
+
                     else -> false
                 }
             }
